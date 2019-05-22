@@ -3,10 +3,12 @@ import store from "./store";
 import {
   getInputChangeAction,
   getAddItemAction,
-  getDeleteItemAction
+  getDeleteItemAction,
+  initListAction
 } from "./store/actionCreators";
 
 import TodoListUI from "./TodoListUI";
+import axios from 'axios'
 
 import "antd/dist/antd.css";
 
@@ -33,6 +35,16 @@ class TodoList extends Component {
         list={this.state.list}
       />
     );
+  }
+
+  componentDidMount() {
+    axios('http://localhost:3443/list').then(res => {
+      const data = res.data;
+      const action = initListAction(data)
+      console.log(action)
+      store.dispatch(action)
+      console.log(res)
+    })
   }
 
   handleInputChange(e) {
