@@ -4,11 +4,11 @@ import {
   getInputChangeAction,
   getAddItemAction,
   getDeleteItemAction,
-  initListAction
+  // initListAction,
+  getTodoList
 } from "./store/actionCreators";
 
 import TodoListUI from "./TodoListUI";
-import axios from 'axios'
 
 import "antd/dist/antd.css";
 
@@ -38,13 +38,9 @@ class TodoList extends Component {
   }
 
   componentDidMount() {
-    axios('http://localhost:3443/list').then(res => {
-      const data = res.data;
-      const action = initListAction(data)
-      console.log(action)
-      store.dispatch(action)
-      console.log(res)
-    })
+    const action = getTodoList()
+    // 这里的 action 是一个函数， 使用了 redux-thunk 之后，这个 action 会被自动的执行。
+    store.dispatch(action)
   }
 
   handleInputChange(e) {
