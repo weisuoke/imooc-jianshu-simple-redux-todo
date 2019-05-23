@@ -4,11 +4,10 @@ import {
   getInputChangeAction,
   getAddItemAction,
   getDeleteItemAction,
-  initListAction
+  getInitList
 } from "./store/actionCreators";
 
 import TodoListUI from "./TodoListUI";
-import axios from 'axios'
 
 import "antd/dist/antd.css";
 
@@ -38,13 +37,14 @@ class TodoList extends Component {
   }
 
   componentDidMount() {
-    axios('http://localhost:3443/list').then(res => {
-      const data = res.data;
-      const action = initListAction(data)
-      console.log(action)
-      store.dispatch(action)
-      console.log(res)
-    })
+    // axios('http://localhost:3443/list').then(res => {
+    //   const data = res.data;
+    //   const action = initListAction(data)
+    //   store.dispatch(action)
+    // })
+    const action = getInitList();
+    store.dispatch(action)
+    console.log('🍎', action)
   }
 
   handleInputChange(e) {
