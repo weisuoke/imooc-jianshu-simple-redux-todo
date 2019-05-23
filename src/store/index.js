@@ -1,9 +1,12 @@
 import { createStore, applyMiddleware, compose } from "redux";
-import thunk from "redux-thunk";
+import createSagaMiddleware from 'redux-saga'
 
 import reducer from "./reducer";
+import todoSagas from './sagas'
 
-const middleware = [thunk];
+const sagaMiddleware = createSagaMiddleware()
+
+const middleware = [sagaMiddleware];
 
 const composeEnhancers =
   typeof window === "object" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
@@ -19,5 +22,7 @@ const enhancer = composeEnhancers(
 
 // 创建了公共存储仓
 const store = createStore(reducer, enhancer);
+
+sagaMiddleware.run(todoSagas)
 
 export default store;
